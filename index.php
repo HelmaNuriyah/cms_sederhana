@@ -104,49 +104,49 @@ $recent_posts = $pdo->query("SELECT a.*, c.name as category, u.username as autho
         <?php if(isset($_SESSION['user_id'])): ?>
             <div class="row g-4 mb-4">
                 <div class="col-md-3">
-                    <div class="card bg-dark text-white shadow">
+                    <div class="card bg-primary text-light shadow">
                         <div class="card-body text-center">
                             <h5 class="card-title">Total Posts</h5>
                             <h2><?= $total_posts ?></h2>
-                            <a href="admin/dashboard.php" class="btn btn-outline-warning btn-sm mt-2">Lihat Posts</a>
+                            <a href="admin/dashboard.php" class="btn btn-outline-light btn-sm mt-2">Lihat Posts</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card bg-dark text-white shadow">
+                    <div class="card bg-primary text-light shadow">
                         <div class="card-body text-center">
                             <h5 class="card-title">Total Categories</h5>
                             <h2><?= $total_categories ?></h2>
-                            <a href="admin/categories.php" class="btn btn-outline-warning btn-sm mt-2">Lihat Categories</a>
+                            <a href="admin/categories.php" class="btn btn-outline-light btn-sm mt-2">Lihat Categories</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card bg-dark text-white shadow">
+                    <div class="card bg-primary text-light shadow">
                         <div class="card-body text-center">
                             <h5 class="card-title">Total Users</h5>
                             <h2><?= $total_users ?></h2>
-                            <a href="admin/users.php" class="btn btn-outline-warning btn-sm mt-2">Lihat Users</a>
+                            <a href="admin/users.php" class="btn btn-outline-light btn-sm mt-2">Lihat Users</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card bg-dark text-white shadow">
+                    <div class="card bg-primary text-light shadow">
                         <div class="card-body text-center">
                             <h5 class="card-title">Total Comments</h5>
                             <h2><?= $total_comments ?></h2>
-                            <a href="admin/comments.php" class="btn btn-outline-warning btn-sm mt-2">Lihat Comments</a>
+                            <a href="admin/comments.php" class="btn btn-outline-light btn-sm mt-2">Lihat Comments</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card shadow mb-5">
-                <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white">
+                <div class="card-header d-flex justify-content-between align-items-center bg-primary text-light">
                     <span>Recent Posts</span>
-                    <a href="admin/dashboard.php" class="btn btn-warning btn-sm">View All</a>
+                    <a href="admin/dashboard.php" class="btn btn-light btn-sm">View All</a>
                 </div>
                 <div class="card-body p-0">
-                    <table class="table table-dark table-hover mb-0">
+                    <table class="table table-primary table-hover mb-0">
                         <thead>
                             <tr>
                                 <th>Title</th>
