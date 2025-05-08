@@ -5,6 +5,19 @@ session_start();
 // Fetch all published articles
 $stmt = $pdo->query("SELECT * FROM articles WHERE status = 'published' ORDER BY created_at DESC");
 $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Query statistik
+$total_posts = $pdo->query("SELECT COUNT(*) FROM articles")->fetchColumn();
+$total_categories = $pdo->query("SELECT COUNT(*) FROM categories")->fetchColumn();
+$total_users = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
+$total_comments = $pdo->query("SELECT COUNT(*) FROM comments")->fetchColumn();
+
+// Query recent posts
+$recent_posts = $pdo->query("SELECT a.*, c.name as category, u.username as author 
+    FROM articles a 
+    LEFT JOIN categories c ON a.category_id = c.id 
+    LEFT JOIN users u ON a.user_id = u.id 
+    ORDER BY a.created_at DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -89,37 +102,77 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="container mt-4">
         <?php if(isset($_SESSION['user_id'])): ?>
-            <div class="d-flex flex-column align-items-center mb-4">
-                <a href="admin/create_article.php" class="btn btn-primary btn-lg mb-3">Create New Article</a>
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="card bg-dark text-white shadow">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Total Posts</h5>
+                            <h2><?= $total_posts ?></h2>
+                            <a href="admin/dashboard.php" class="btn btn-outline-warning btn-sm mt-2">Lihat Posts</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-dark text-white shadow">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Total Categories</h5>
+                            <h2><?= $total_categories ?></h2>
+                            <a href="admin/categories.php" class="btn btn-outline-warning btn-sm mt-2">Lihat Categories</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-dark text-white shadow">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Total Users</h5>
+                            <h2><?= $total_users ?></h2>
+                            <a href="admin/users.php" class="btn btn-outline-warning btn-sm mt-2">Lihat Users</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-dark text-white shadow">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Total Comments</h5>
+                            <h2><?= $total_comments ?></h2>
+                            <a href="admin/comments.php" class="btn btn-outline-warning btn-sm mt-2">Lihat Comments</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="table-responsive mb-5">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>Created At</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach($articles as $article): ?>
+            <div class="card shadow mb-5">
+                <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white">
+                    <span>Recent Posts</span>
+                    <a href="admin/dashboard.php" class="btn btn-warning btn-sm">View All</a>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-dark table-hover mb-0">
+                        <thead>
                             <tr>
-                                <td><?php echo htmlspecialchars($article['title']); ?></td>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Author</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($recent_posts as $post): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($post['title']) ?></td>
+                                <td><?= htmlspecialchars($post['category']) ?></td>
+                                <td><?= htmlspecialchars($post['author']) ?></td>
+                                <td><?= date('Y-m-d', strtotime($post['created_at'])) ?></td>
                                 <td>
-                                    <span class="badge bg-<?php echo $article['status'] == 'published' ? 'success' : 'warning'; ?>">
-                                        <?php echo ucfirst($article['status']); ?>
+                                    <span class="badge bg-<?= $post['status'] == 'published' ? 'success' : 'warning' ?>">
+                                        <?= ucfirst($post['status']) ?>
                                     </span>
                                 </td>
-                                <td><?php echo date('Y-m-d H:i', strtotime($article['created_at'])); ?></td>
-                                <td>
-                                    <a href="admin/edit_article.php?id=<?php echo $article['id']; ?>" class="btn btn-sm btn-primary">Edit</a>
-                                    <a href="admin/delete_article.php?id=<?php echo $article['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this article?')">Delete</a>
-                                </td>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         <?php else: ?>
             <div class="row">
