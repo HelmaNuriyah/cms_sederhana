@@ -39,39 +39,42 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </nav>
 
     <div class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Manage Articles</h2>
-            <a href="create_article.php" class="btn btn-primary">Create New Article</a>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Status</th>
-                        <th>Created At</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach($articles as $article): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($article['title']); ?></td>
-                            <td>
-                                <span class="badge bg-<?php echo $article['status'] == 'published' ? 'success' : 'warning'; ?>">
-                                    <?php echo ucfirst($article['status']); ?>
-                                </span>
-                            </td>
-                            <td><?php echo date('Y-m-d H:i', strtotime($article['created_at'])); ?></td>
-                            <td>
-                                <a href="edit_article.php?id=<?php echo $article['id']; ?>" class="btn btn-sm btn-primary">Edit</a>
-                                <a href="delete_article.php?id=<?php echo $article['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this article?')">Delete</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="d-flex flex-column align-items-center mb-4">
+                    <h1 class="display-4 text-center mb-3">Manage Articles</h1>
+                    <a href="create_article.php" class="btn btn-primary btn-lg">Create New Article</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($articles as $article): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($article['title']); ?></td>
+                                    <td>
+                                        <span class="badge bg-<?php echo $article['status'] == 'published' ? 'success' : 'warning'; ?>">
+                                            <?php echo ucfirst($article['status']); ?>
+                                        </span>
+                                    </td>
+                                    <td><?php echo date('Y-m-d H:i', strtotime($article['created_at'])); ?></td>
+                                    <td>
+                                        <a href="edit_article.php?id=<?php echo $article['id']; ?>" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="delete_article.php?id=<?php echo $article['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this article?')">Delete</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
