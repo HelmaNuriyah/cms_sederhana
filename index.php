@@ -25,7 +25,7 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container mb-4">
         <div class="row justify-content-center">
             <div class="col-lg-6">
-                <table class="table table-bordered text-center">
+                <table class="table table-bordered text-center mb-4">
                     <thead class="table-light">
                         <tr>
                             <th>Welcome</th>
@@ -34,6 +34,24 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <tbody>
                         <tr>
                             <td>Welcome, <strong><?php echo htmlspecialchars($_SESSION['username'] ?? 'User'); ?></strong>!</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th colspan="2">User</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Username</td>
+                            <td><?php echo htmlspecialchars($_SESSION['username'] ?? 'User'); ?></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <a href="admin/edit_user.php" class="btn btn-secondary btn-sm">Edit Profile</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
